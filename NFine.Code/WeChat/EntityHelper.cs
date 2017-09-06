@@ -82,10 +82,10 @@ namespace NFine.Code.WeChat
                             }
                             else if (genericArguments[0].Name == "Account")
                             {
-                                List<WeChatCommonDef> accounts = new List<WeChatCommonDef>();
+                                List<CustomerServiceAccount> accounts = new List<CustomerServiceAccount>();
                                 foreach (var item in root.Elements(propName))
                                 {
-                                    var account = new WeChatCommonDef();
+                                    var account = new CustomerServiceAccount();
                                     FillEntityWithXml(account, new XDocument(item));
                                     accounts.Add(account);
                                 }
@@ -217,7 +217,7 @@ namespace NFine.Code.WeChat
                 else if (propName == "TransInfo")
                 {
                     var transInfoElement = new XElement("TransInfo");
-                    var transInfo = prop.GetValue(entity, null) as List<WeChatCommonDef>;
+                    var transInfo = prop.GetValue(entity, null) as List<CustomerServiceAccount>;
                     foreach (var account in transInfo)
                     {
                         var trans = ConvertEntityToXml(account).Root.Elements();
