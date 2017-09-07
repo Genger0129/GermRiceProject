@@ -49,14 +49,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBContext\MapGenerator.cs" />
     <Compile Include="DBContext\NFineDbContext.cs" />
+    <Compile Include="DBContext\Province.cs" />
+    <Compile Include="DBContext\Sys_Area.cs" />
+    <Compile Include="DBContext\Sys_DbBackup.cs" />
+    <Compile Include="DBContext\Sys_FilterIP.cs" />
+    <Compile Include="DBContext\Sys_Items.cs" />
+    <Compile Include="DBContext\Sys_ItemsDetail.cs" />
+    <Compile Include="DBContext\Sys_Log.cs" />
+    <Compile Include="DBContext\Sys_Module.cs" />
+    <Compile Include="DBContext\Sys_ModuleButton.cs" />
+    <Compile Include="DBContext\Sys_ModuleForm.cs" />
+    <Compile Include="DBContext\Sys_ModuleFormInstance.cs" />
+    <Compile Include="DBContext\Sys_Organize.cs" />
+    <Compile Include="DBContext\Sys_Role.cs" />
+    <Compile Include="DBContext\Sys_RoleAuthorize.cs" />
+    <Compile Include="DBContext\Sys_User.cs" />
+    <Compile Include="DBContext\Sys_UserLogOn.cs" />
     <Compile Include="Extensions\DbHelper.cs" />
     <Compile Include="Extensions\EntityInterfaceExtensions.cs" />
+    <Compile Include="Migrations\201709060255224_InitialCreate.cs" />
+    <Compile Include="Migrations\201709060255224_InitialCreate.Designer.cs">
+      <DependentUpon>201709060255224_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Repository\IRepositoryBase.cs" />
     <Compile Include="Repository\IRepositoryBase.T.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\RepositoryBase.cs" />
     <Compile Include="Repository\RepositoryBase.T.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -69,6 +96,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709060255224_InitialCreate.resx">
+      <DependentUpon>201709060255224_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\InitialData.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

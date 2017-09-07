@@ -15,6 +15,7 @@ using NFine.Domain.Entity.SystemManage;
 using NFine.Application.SystemManage;
 using NFine.Code;
 using NFine.Application;
+using ModelGenerate;
 
 namespace NFine.Web.Controllers
 {
