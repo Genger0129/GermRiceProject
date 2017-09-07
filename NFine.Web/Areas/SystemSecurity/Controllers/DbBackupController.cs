@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemSecurity;
 using NFine.Code;
-using NFine.Domain.Entity.SystemSecurity;
+using NFine.Data;
 using System.Web.Mvc;
 
 namespace NFine.Web.Areas.SystemSecurity.Controllers
@@ -25,7 +25,7 @@ namespace NFine.Web.Areas.SystemSecurity.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(DbBackupEntity dbBackupEntity)
+        public ActionResult SubmitForm(Sys_DbBackup dbBackupEntity)
         {
             dbBackupEntity.F_FilePath = Server.MapPath("~/Resource/DbBackup/" + dbBackupEntity.F_FileName + ".bak");
             dbBackupEntity.F_FileName = dbBackupEntity.F_FileName + ".bak";
@@ -38,6 +38,8 @@ namespace NFine.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             dbBackupApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }

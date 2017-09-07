@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,7 +23,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         {
             var data = moduleApp.GetList();
             var treeList = new List<TreeSelectModel>();
-            foreach (ModuleEntity item in data)
+            foreach (Sys_Module item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
                 treeModel.id = item.F_Id;
@@ -43,7 +43,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
             }
             var treeList = new List<TreeGridModel>();
-            foreach (ModuleEntity item in data)
+            foreach (Sys_Module item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
                 bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
@@ -66,7 +66,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ModuleEntity moduleEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_Module moduleEntity, string keyValue)
         {
             moduleApp.SubmitForm(moduleEntity, keyValue);
             return Success("操作成功。");
@@ -77,6 +77,8 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             moduleApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }

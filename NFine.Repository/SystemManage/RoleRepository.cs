@@ -5,25 +5,24 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System.Collections.Generic;
 
 namespace NFine.Repository.SystemManage
 {
-    public class RoleRepository : RepositoryBase<RoleEntity>, IRoleRepository
+    public class RoleRepository : RepositoryBase<Sys_Role>, IRoleRepository
     {
         public void DeleteForm(string keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
-                db.Delete<RoleEntity>(t => t.F_Id == keyValue);
-                db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == keyValue);
+                db.Delete<Sys_Role>(t => t.F_Id == keyValue);
+                db.Delete<Sys_RoleAuthorize>(t => t.F_ObjectId == keyValue);
                 db.Commit();
             }
         }
-        public void SubmitForm(RoleEntity roleEntity, List<RoleAuthorizeEntity> roleAuthorizeEntitys, string keyValue)
+        public void SubmitForm(Sys_Role roleEntity, List<Sys_RoleAuthorize> roleAuthorizeEntitys, string keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
@@ -36,7 +35,7 @@ namespace NFine.Repository.SystemManage
                     roleEntity.F_Category = 1;
                     db.Insert(roleEntity);
                 }
-                db.Delete<RoleAuthorizeEntity>(t => t.F_ObjectId == roleEntity.F_Id);
+                db.Delete<Sys_RoleAuthorize>(t => t.F_ObjectId == roleEntity.F_Id);
                 db.Insert(roleAuthorizeEntitys);
                 db.Commit();
             }

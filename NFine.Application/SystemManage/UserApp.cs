@@ -5,7 +5,7 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System;
@@ -18,9 +18,9 @@ namespace NFine.Application.SystemManage
         private IUserRepository service = new UserRepository();
         private UserLogOnApp userLogOnApp = new UserLogOnApp();
 
-        public List<UserEntity> GetList(Pagination pagination, string keyword)
+        public List<Sys_User> GetList(Pagination pagination, string keyword)
         {
-            var expression = ExtLinq.True<UserEntity>();
+            var expression = ExtLinq.True<Sys_User>();
             if (!string.IsNullOrEmpty(keyword))
             {
                 expression = expression.And(t => t.F_Account.Contains(keyword));
@@ -30,7 +30,7 @@ namespace NFine.Application.SystemManage
             expression = expression.And(t => t.F_Account != "admin");
             return service.FindList(expression, pagination);
         }
-        public UserEntity GetForm(string keyValue)
+        public Sys_User GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -38,30 +38,42 @@ namespace NFine.Application.SystemManage
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public void SubmitForm(Sys_User entity, Sys_UserLogOn userLogOnEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                userEntity.Modify(keyValue);
+                entity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                entity.F_LastModifyTime = DateTime.Now;
             }
             else
             {
-                userEntity.Create();
+                entity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                entity.F_CreatorTime = DateTime.Now;
             }
-            service.SubmitForm(userEntity, userLogOnEntity, keyValue);
+            service.SubmitForm(entity, userLogOnEntity, keyValue);
         }
-        public void UpdateForm(UserEntity userEntity)
+        public void UpdateForm(Sys_User userEntity)
         {
             service.Update(userEntity);
         }
-        public UserEntity CheckLogin(string username, string password)
+        public Sys_User CheckLogin(string username, string password)
         {
-            UserEntity userEntity = service.FindEntity(t => t.F_Account == username);
+            Sys_User userEntity = service.FindEntity(t => t.F_Account == username);
             if (userEntity != null)
             {
                 if (userEntity.F_EnabledMark == true)
                 {
-                    UserLogOnEntity userLogOnEntity = userLogOnApp.GetForm(userEntity.F_Id);
+                    Sys_UserLogOn userLogOnEntity = userLogOnApp.GetForm(userEntity.F_Id);
                     string dbPassword = Md5.md5(DESEncrypt.Encrypt(password.ToLower(), userLogOnEntity.F_UserSecretkey).ToLower(), 32).ToLower();
                     if (dbPassword == userLogOnEntity.F_UserPassword)
                     {

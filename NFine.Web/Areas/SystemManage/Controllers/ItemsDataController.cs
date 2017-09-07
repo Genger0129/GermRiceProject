@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -30,7 +30,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         {
             var data = itemsDetailApp.GetItemList(enCode);
             List<object> list = new List<object>();
-            foreach (ItemsDetailEntity item in data)
+            foreach (Sys_ItemsDetail item in data)
             {
                 list.Add(new { id = item.F_ItemCode, text = item.F_ItemName });
             }
@@ -46,7 +46,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ItemsDetailEntity itemsDetailEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_ItemsDetail itemsDetailEntity, string keyValue)
         {
             itemsDetailApp.SubmitForm(itemsDetailEntity, keyValue);
             return Success("操作成功。");
@@ -57,6 +57,8 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             itemsDetailApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }

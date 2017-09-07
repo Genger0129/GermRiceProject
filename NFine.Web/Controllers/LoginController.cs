@@ -4,18 +4,16 @@
  * Description: NFine快速开发平台
  * Website：http://www.nfine.cn
 *********************************************************************************/
-using NFine.Domain.Entity.SystemSecurity;
 using NFine.Application.SystemSecurity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using NFine.Domain.Entity.SystemManage;
 using NFine.Application.SystemManage;
 using NFine.Code;
 using NFine.Application;
-using ModelGenerate;
+using NFine.Data;
 
 namespace NFine.Web.Controllers
 {
@@ -35,7 +33,7 @@ namespace NFine.Web.Controllers
         [HttpGet]
         public ActionResult OutLogin()
         {
-            new LogApp().WriteDbLog(new LogEntity
+            new LogApp().WriteDbLog(new Sys_Log
             {
                 F_ModuleName = "系统登录",
                 F_Type = DbLogType.Exit.ToString(),
@@ -53,7 +51,7 @@ namespace NFine.Web.Controllers
         [HandlerAjaxOnly]
         public ActionResult CheckLogin(string username, string password, string code)
         {
-            LogEntity logEntity = new LogEntity();
+            Sys_Log logEntity = new Sys_Log();
             logEntity.F_ModuleName = "系统登录";
             logEntity.F_Type = DbLogType.Login.ToString();
             try
@@ -63,7 +61,7 @@ namespace NFine.Web.Controllers
                     throw new Exception("验证码错误，请重新输入");
                 }
 
-                UserEntity userEntity = new UserApp().CheckLogin(username, password);
+                Sys_User userEntity = new UserApp().CheckLogin(username, password);
                 if (userEntity != null)
                 {
                     OperatorModel operatorModel = new OperatorModel();

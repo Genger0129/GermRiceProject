@@ -5,13 +5,12 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemManage;
 using System.Collections.Generic;
 
 namespace NFine.Domain.IRepository.SystemManage
 {
-    public interface IModuleButtonRepository : IRepositoryBase<ModuleButtonEntity>
+    public interface IModuleButtonRepository : IRepositoryBase<Sys_ModuleButton>
     {
-        void SubmitCloneButton(List<ModuleButtonEntity> entitys);
+        void SubmitCloneButton(List<Sys_ModuleButton> entitys);
     }
 }

@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,7 +23,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         {
             var data = organizeApp.GetList();
             var treeList = new List<TreeSelectModel>();
-            foreach (OrganizeEntity item in data)
+            foreach (Sys_Organize item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
                 treeModel.id = item.F_Id;
@@ -40,7 +40,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         {
             var data = organizeApp.GetList();
             var treeList = new List<TreeViewModel>();
-            foreach (OrganizeEntity item in data)
+            foreach (Sys_Organize item in data)
             {
                 TreeViewModel tree = new TreeViewModel();
                 bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
@@ -65,7 +65,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
                 data = data.TreeWhere(t => t.F_FullName.Contains(keyword));
             }
             var treeList = new List<TreeGridModel>();
-            foreach (OrganizeEntity item in data)
+            foreach (Sys_Organize item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
                 bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
@@ -88,7 +88,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(OrganizeEntity organizeEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_Organize organizeEntity, string keyValue)
         {
             organizeApp.SubmitForm(organizeEntity, keyValue);
             return Success("操作成功。");
@@ -99,6 +99,8 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             organizeApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }

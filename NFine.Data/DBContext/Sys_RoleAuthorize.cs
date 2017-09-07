@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ModelGenerate
+namespace NFine.Data
 {
     using System;
     using System.Collections.Generic;

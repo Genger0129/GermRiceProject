@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,7 +23,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         {
             var data = moduleButtonApp.GetList(moduleId);
             var treeList = new List<TreeSelectModel>();
-            foreach (ModuleButtonEntity item in data)
+            foreach (Sys_ModuleButton item in data)
             {
                 TreeSelectModel treeModel = new TreeSelectModel();
                 treeModel.id = item.F_Id;
@@ -39,7 +39,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         {
             var data = moduleButtonApp.GetList(moduleId);
             var treeList = new List<TreeGridModel>();
-            foreach (ModuleButtonEntity item in data)
+            foreach (Sys_ModuleButton item in data)
             {
                 TreeGridModel treeModel = new TreeGridModel();
                 bool hasChildren = data.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
@@ -62,7 +62,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_ModuleButton moduleButtonEntity, string keyValue)
         {
             moduleButtonApp.SubmitForm(moduleButtonEntity, keyValue);
             return Success("操作成功。");
@@ -72,6 +72,8 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             moduleButtonApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
@@ -87,7 +89,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
             var moduledata = moduleApp.GetList();
             var buttondata = moduleButtonApp.GetList();
             var treeList = new List<TreeViewModel>();
-            foreach (ModuleEntity item in moduledata)
+            foreach (Sys_Module item in moduledata)
             {
                 TreeViewModel tree = new TreeViewModel();
                 bool hasChildren = moduledata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;
@@ -100,7 +102,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
                 tree.hasChildren = true;
                 treeList.Add(tree);
             }
-            foreach (ModuleButtonEntity item in buttondata)
+            foreach (Sys_ModuleButton item in buttondata)
             {
                 TreeViewModel tree = new TreeViewModel();
                 bool hasChildren = buttondata.Count(t => t.F_ParentId == item.F_Id) == 0 ? false : true;

@@ -261,7 +261,7 @@ public void BeginNamespace(CodeGenerationTools code)
     if (!String.IsNullOrEmpty(codeNamespace))
     {
 #>
-namespace <#=code.EscapeNamespace(codeNamespace)#>
+namespace NFine.Data
 {
 <#+
         PushIndent("    ");

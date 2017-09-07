@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemSecurity;
 using NFine.Code;
-using NFine.Domain.Entity.SystemSecurity;
+using NFine.Data;
 using System.Web.Mvc;
 
 namespace NFine.Web.Areas.SystemSecurity.Controllers
@@ -32,7 +32,7 @@ namespace NFine.Web.Areas.SystemSecurity.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_FilterIP filterIPEntity, string keyValue)
         {
             filterIPApp.SubmitForm(filterIPEntity, keyValue);
             return Success("操作成功。");
@@ -43,6 +43,8 @@ namespace NFine.Web.Areas.SystemSecurity.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             filterIPApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }

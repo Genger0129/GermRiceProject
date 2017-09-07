@@ -5,7 +5,7 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System;
@@ -18,11 +18,11 @@ namespace NFine.Application.SystemManage
     {
         private IModuleRepository service = new ModuleRepository();
 
-        public List<ModuleEntity> GetList()
+        public List<Sys_Module> GetList()
         {
             return service.IQueryable().OrderBy(t => t.F_SortCode).ToList();
         }
-        public ModuleEntity GetForm(string keyValue)
+        public Sys_Module GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -37,17 +37,29 @@ namespace NFine.Application.SystemManage
                 service.Delete(t => t.F_Id == keyValue);
             }
         }
-        public void SubmitForm(ModuleEntity moduleEntity, string keyValue)
+        public void SubmitForm(Sys_Module entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                moduleEntity.Modify(keyValue);
-                service.Update(moduleEntity);
+                entity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                entity.F_LastModifyTime = DateTime.Now;
+                service.Update(entity);
             }
             else
             {
-                moduleEntity.Create();
-                service.Insert(moduleEntity);
+                entity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                entity.F_CreatorTime = DateTime.Now;
+                service.Insert(entity);
             }
         }
     }

@@ -5,9 +5,10 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,9 +18,9 @@ namespace NFine.Application.SystemManage
     {
         private IItemsDetailRepository service = new ItemsDetailRepository();
 
-        public List<ItemsDetailEntity> GetList(string itemId = "", string keyword = "")
+        public List<Sys_ItemsDetail> GetList(string itemId = "", string keyword = "")
         {
-            var expression = ExtLinq.True<ItemsDetailEntity>();
+            var expression = ExtLinq.True<Sys_ItemsDetail>();
             if (!string.IsNullOrEmpty(itemId))
             {
                 expression = expression.And(t => t.F_ItemId == itemId);
@@ -31,11 +32,11 @@ namespace NFine.Application.SystemManage
             }
             return service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
         }
-        public List<ItemsDetailEntity> GetItemList(string enCode)
+        public List<Sys_ItemsDetail> GetItemList(string enCode)
         {
             return service.GetItemList(enCode);
         }
-        public ItemsDetailEntity GetForm(string keyValue)
+        public Sys_ItemsDetail GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -43,17 +44,29 @@ namespace NFine.Application.SystemManage
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(ItemsDetailEntity itemsDetailEntity, string keyValue)
+        public void SubmitForm(Sys_ItemsDetail entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                itemsDetailEntity.Modify(keyValue);
-                service.Update(itemsDetailEntity);
+                entity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                entity.F_LastModifyTime = DateTime.Now;
+                service.Update(entity);
             }
             else
             {
-                itemsDetailEntity.Create();
-                service.Insert(itemsDetailEntity);
+                entity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                entity.F_CreatorTime = DateTime.Now;
+                service.Insert(entity);
             }
         }
     }

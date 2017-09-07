@@ -5,9 +5,10 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,9 +18,9 @@ namespace NFine.Application.SystemManage
     {
         private IRoleRepository service = new RoleRepository();
 
-        public List<RoleEntity> GetList(string keyword = "")
+        public List<Sys_Role> GetList(string keyword = "")
         {
-            var expression = ExtLinq.True<RoleEntity>();
+            var expression = ExtLinq.True<Sys_Role>();
             if (!string.IsNullOrEmpty(keyword))
             {
                 expression = expression.And(t => t.F_FullName.Contains(keyword));
@@ -28,7 +29,7 @@ namespace NFine.Application.SystemManage
             expression = expression.And(t => t.F_Category == 2);
             return service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
         }
-        public RoleEntity GetForm(string keyValue)
+        public Sys_Role GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -36,18 +37,30 @@ namespace NFine.Application.SystemManage
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(RoleEntity roleEntity, string keyValue)
+        public void SubmitForm(Sys_Role entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                roleEntity.Modify(keyValue);
-                service.Update(roleEntity);
+                entity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                entity.F_LastModifyTime = DateTime.Now;
+                service.Update(entity);
             }
             else
             {
-                roleEntity.Create();
-                roleEntity.F_Category = 2;
-                service.Insert(roleEntity);
+                entity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                entity.F_CreatorTime = DateTime.Now;
+                entity.F_Category = 2;
+                service.Insert(entity);
             }
         }
     }

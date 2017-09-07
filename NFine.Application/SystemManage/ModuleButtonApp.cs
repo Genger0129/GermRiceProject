@@ -5,7 +5,7 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System;
@@ -18,16 +18,16 @@ namespace NFine.Application.SystemManage
     {
         private IModuleButtonRepository service = new ModuleButtonRepository();
 
-        public List<ModuleButtonEntity> GetList(string moduleId = "")
+        public List<Sys_ModuleButton> GetList(string moduleId = "")
         {
-            var expression = ExtLinq.True<ModuleButtonEntity>();
+            var expression = ExtLinq.True<Sys_ModuleButton>();
             if (!string.IsNullOrEmpty(moduleId))
             {
                 expression = expression.And(t => t.F_ModuleId == moduleId);
             }
             return service.IQueryable(expression).OrderBy(t => t.F_SortCode).ToList();
         }
-        public ModuleButtonEntity GetForm(string keyValue)
+        public Sys_ModuleButton GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -42,27 +42,39 @@ namespace NFine.Application.SystemManage
                 service.Delete(t => t.F_Id == keyValue);
             }
         }
-        public void SubmitForm(ModuleButtonEntity moduleButtonEntity, string keyValue)
+        public void SubmitForm(Sys_ModuleButton entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                moduleButtonEntity.Modify(keyValue);
-                service.Update(moduleButtonEntity);
+                entity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                entity.F_LastModifyTime = DateTime.Now;
+                service.Update(entity);
             }
             else
             {
-                moduleButtonEntity.Create();
-                service.Insert(moduleButtonEntity);
+                entity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                entity.F_CreatorTime = DateTime.Now;
+                service.Insert(entity);
             }
         }
         public void SubmitCloneButton(string moduleId, string Ids)
         {
             string[] ArrayId = Ids.Split(',');
             var data = this.GetList();
-            List<ModuleButtonEntity> entitys = new List<ModuleButtonEntity>();
+            List<Sys_ModuleButton> entitys = new List<Sys_ModuleButton>();
             foreach (string item in ArrayId)
             {
-                ModuleButtonEntity moduleButtonEntity = data.Find(t => t.F_Id == item);
+                Sys_ModuleButton moduleButtonEntity = data.Find(t => t.F_Id == item);
                 moduleButtonEntity.F_Id = Common.GuId();
                 moduleButtonEntity.F_ModuleId = moduleId;
                 entitys.Add(moduleButtonEntity);

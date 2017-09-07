@@ -1,5 +1,4 @@
 ﻿using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System;

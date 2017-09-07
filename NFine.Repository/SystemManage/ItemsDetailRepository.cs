@@ -5,7 +5,6 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System.Collections.Generic;
@@ -15,9 +14,9 @@ using System.Text;
 
 namespace NFine.Repository.SystemManage
 {
-    public class ItemsDetailRepository : RepositoryBase<ItemsDetailEntity>, IItemsDetailRepository
+    public class ItemsDetailRepository : RepositoryBase<Sys_ItemsDetail>, IItemsDetailRepository
     {
-        public List<ItemsDetailEntity> GetItemList(string enCode)
+        public List<Sys_ItemsDetail> GetItemList(string enCode)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append(@"SELECT  d.*

@@ -5,9 +5,10 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemSecurity;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemSecurity;
 using NFine.Repository.SystemSecurity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,16 +18,16 @@ namespace NFine.Application.SystemSecurity
     {
         private IFilterIPRepository service = new FilterIPRepository();
 
-        public List<FilterIPEntity> GetList(string keyword)
+        public List<Sys_FilterIP> GetList(string keyword)
         {
-            var expression = ExtLinq.True<FilterIPEntity>();
+            var expression = ExtLinq.True<Sys_FilterIP>();
             if (!string.IsNullOrEmpty(keyword))
             {
                 expression = expression.And(t => t.F_StartIP.Contains(keyword));
             }
             return service.IQueryable(expression).OrderByDescending(t => t.F_DeleteTime).ToList();
         }
-        public FilterIPEntity GetForm(string keyValue)
+        public Sys_FilterIP GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -34,16 +35,28 @@ namespace NFine.Application.SystemSecurity
         {
             service.Delete(t => t.F_Id == keyValue);
         }
-        public void SubmitForm(FilterIPEntity filterIPEntity, string keyValue)
+        public void SubmitForm(Sys_FilterIP filterIPEntity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                filterIPEntity.Modify(keyValue);
+                filterIPEntity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    filterIPEntity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                filterIPEntity.F_LastModifyTime = DateTime.Now;
                 service.Update(filterIPEntity);
             }
             else
             {
-                filterIPEntity.Create();
+                filterIPEntity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    filterIPEntity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                filterIPEntity.F_CreatorTime = DateTime.Now;
                 service.Insert(filterIPEntity);
             }
         }

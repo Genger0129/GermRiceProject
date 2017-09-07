@@ -7,7 +7,6 @@
 using NFine.Application.SystemManage;
 using NFine.Application.SystemSecurity;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
 using System.Collections.Generic;
 using System.Text;
 using System.Web.Mvc;

@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -42,7 +42,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_User userEntity, Sys_UserLogOn userLogOnEntity, string keyValue)
         {
             userApp.SubmitForm(userEntity, userLogOnEntity, keyValue);
             return Success("操作成功。");
@@ -53,6 +53,8 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             userApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }
@@ -76,7 +78,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DisabledAccount(string keyValue)
         {
-            UserEntity userEntity = new UserEntity();
+            Sys_User userEntity = new Sys_User();
             userEntity.F_Id = keyValue;
             userEntity.F_EnabledMark = false;
             userApp.UpdateForm(userEntity);
@@ -88,7 +90,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EnabledAccount(string keyValue)
         {
-            UserEntity userEntity = new UserEntity();
+            Sys_User userEntity = new Sys_User();
             userEntity.F_Id = keyValue;
             userEntity.F_EnabledMark = true;
             userApp.UpdateForm(userEntity);

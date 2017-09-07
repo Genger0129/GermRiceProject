@@ -27,11 +27,15 @@ namespace NFine.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            var views = Regex.Split(Resource1.InitialData, "GO");
-            foreach (var v in views)
+            var modelUser = context.Sys_User.FirstOrDefault(x=>true);
+            if (modelUser == null)
             {
-                if (!string.IsNullOrWhiteSpace(v))
-                    context.Database.ExecuteSqlCommand(v);
+                var views = Regex.Split(Resource1.InitialData, "GO");
+                foreach (var v in views)
+                {
+                    if (!string.IsNullOrWhiteSpace(v))
+                        context.Database.ExecuteSqlCommand(v);
+                }
             }
         }
     }

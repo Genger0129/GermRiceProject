@@ -5,13 +5,12 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemSecurity;
 
 namespace NFine.Domain.IRepository.SystemSecurity
 {
-    public interface IDbBackupRepository : IRepositoryBase<DbBackupEntity>
+    public interface IDbBackupRepository : IRepositoryBase<Sys_DbBackup>
     {
         void DeleteForm(string keyValue);
-        void ExecuteDbBackup(DbBackupEntity dbBackupEntity);
+        void ExecuteDbBackup(Sys_DbBackup dbBackupEntity);
     }
 }

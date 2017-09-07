@@ -5,11 +5,10 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemSecurity;
 
 namespace NFine.Domain.IRepository.SystemSecurity
 {
-    public interface ILogRepository : IRepositoryBase<LogEntity>
+    public interface ILogRepository : IRepositoryBase<Sys_Log>
     {
         
     }

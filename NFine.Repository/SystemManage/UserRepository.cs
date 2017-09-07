@@ -6,24 +6,23 @@
 *********************************************************************************/
 using NFine.Code;
 using NFine.Data;
-using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 
 namespace NFine.Repository.SystemManage
 {
-    public class UserRepository : RepositoryBase<UserEntity>, IUserRepository
+    public class UserRepository : RepositoryBase<Sys_User>, IUserRepository
     {
         public void DeleteForm(string keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {
-                db.Delete<UserEntity>(t => t.F_Id == keyValue);
-                db.Delete<UserLogOnEntity>(t => t.F_UserId == keyValue);
+                db.Delete<Sys_User>(t => t.F_Id == keyValue);
+                db.Delete<Sys_UserLogOn>(t => t.F_UserId == keyValue);
                 db.Commit();
             }
         }
-        public void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue)
+        public void SubmitForm(Sys_User userEntity, Sys_UserLogOn userLogOnEntity, string keyValue)
         {
             using (var db = new RepositoryBase().BeginTrans())
             {

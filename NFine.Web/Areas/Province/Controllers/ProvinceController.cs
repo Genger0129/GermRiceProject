@@ -1,5 +1,4 @@
 ﻿using NFine.Application.SystemManage;
-using NFine.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,7 @@ namespace NFine.Web.Areas.Province.Controllers
 {
     public class ProvinceController : ControllerBase
     {
-        private CommonApp<ProvinceEntity> provinceApp = new CommonApp<ProvinceEntity>();
+        private CommonApp<NFine.Data.Province> provinceApp = new CommonApp<NFine.Data.Province>();
 
         [HttpGet]
         [HandlerAjaxOnly]
@@ -32,7 +31,7 @@ namespace NFine.Web.Areas.Province.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(ProvinceEntity entity, Guid? keyValue)
+        public ActionResult SubmitForm(NFine.Data.Province entity, Guid? keyValue)
         {
             if (keyValue != null)
             {
@@ -52,6 +51,8 @@ namespace NFine.Web.Areas.Province.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(Guid? keyValue)
         {
+            if(keyValue == null)
+                return Error("未选中任何项。");
             provinceApp.Delete(t => t.ProvinceId == keyValue);
             return Success("删除成功。");
         }

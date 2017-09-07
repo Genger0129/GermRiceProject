@@ -5,7 +5,7 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Code;
-using NFine.Domain.Entity.SystemSecurity;
+using NFine.Data;
 using NFine.Domain.IRepository.SystemSecurity;
 using NFine.Repository.SystemSecurity;
 using System;
@@ -18,9 +18,9 @@ namespace NFine.Application.SystemSecurity
     {
         private IDbBackupRepository service = new DbBackupRepository();
 
-        public List<DbBackupEntity> GetList(string queryJson)
+        public List<Sys_DbBackup> GetList(string queryJson)
         {
-            var expression = ExtLinq.True<DbBackupEntity>();
+            var expression = ExtLinq.True<Sys_DbBackup>();
             var queryParam = queryJson.ToJObject();
             if (!queryParam["condition"].IsEmpty() && !queryParam["keyword"].IsEmpty())
             {
@@ -38,7 +38,7 @@ namespace NFine.Application.SystemSecurity
             }
             return service.IQueryable(expression).OrderByDescending(t => t.F_BackupTime).ToList();
         }
-        public DbBackupEntity GetForm(string keyValue)
+        public Sys_DbBackup GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -46,7 +46,7 @@ namespace NFine.Application.SystemSecurity
         {
             service.DeleteForm(keyValue);
         }
-        public void SubmitForm(DbBackupEntity dbBackupEntity)
+        public void SubmitForm(Sys_DbBackup dbBackupEntity)
         {
             dbBackupEntity.F_Id = Common.GuId();
             dbBackupEntity.F_EnabledMark = true;

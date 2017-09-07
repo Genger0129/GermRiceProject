@@ -48,24 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="01 Infrastructure\ICreationAudited.cs" />
-    <Compile Include="01 Infrastructure\IDeleteAudited.cs" />
-    <Compile Include="01 Infrastructure\IEntity.cs" />
-    <Compile Include="01 Infrastructure\IModificationAudited.cs" />
-    <Compile Include="03 Entity\ModelGenerator.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelGenerator.tt</DependentUpon>
-    </Compile>
-    <Compile Include="03 Entity\SystemManage\AreaEntity.cs" />
-    <Compile Include="03 Entity\SystemManage\ModuleButtonEntity.cs" />
-    <Compile Include="03 Entity\SystemManage\ModuleEntity.cs" />
-    <Compile Include="03 Entity\SystemManage\RoleAuthorizeEntity.cs" />
-    <Compile Include="03 Entity\SystemManage\UserLogOnEntity.cs" />
-    <Compile Include="03 Entity\SystemManage\ItemsDetailEntity.cs" />
-    <Compile Include="03 Entity\SystemSecurity\DbBackupEntity.cs" />
-    <Compile Include="03 Entity\SystemSecurity\FilterIPEntity.cs" />
-    <Compile Include="03 Entity\SystemSecurity\LogEntity.cs" />
     <Compile Include="02 ViewModel\AuthorizeActionModel.cs" />
     <Compile Include="04 IRepository\SystemManage\IAreaRepository.cs" />
     <Compile Include="04 IRepository\SystemManage\ICommonRepository.cs" />
@@ -84,18 +66,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="03 Entity\SystemManage\ItemsEntity.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="03 Entity\SystemManage\OrganizeEntity.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="03 Entity\SystemManage\RoleEntity.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="03 Entity\SystemManage\UserEntity.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\NFine.Code\NFine.Code.csproj">
       <Project>{db19ce03-c307-43fe-a209-08aa4ae10e21}</Project>
       <Name>NFine.Code</Name>
@@ -107,10 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="03 Entity\ModelGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelGenerator.cs</LastGenOutput>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

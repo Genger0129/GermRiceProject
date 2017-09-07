@@ -1,10 +1,11 @@
-﻿/*******************************************************************************
+﻿using NFine.Code;
+using NFine.Data;
+/*******************************************************************************
  * Copyright © 2016 NFine.Framework 版权所有
  * Author: NFine
  * Description: NFine快速开发平台
  * Website：http://www.nfine.cn
 *********************************************************************************/
-using NFine.Domain.Entity.SystemManage;
 using NFine.Domain.IRepository.SystemManage;
 using NFine.Repository.SystemManage;
 using System;
@@ -17,11 +18,11 @@ namespace NFine.Application.SystemManage
     {
         private IOrganizeRepository service = new OrganizeRepository();
 
-        public List<OrganizeEntity> GetList()
+        public List<Sys_Organize> GetList()
         {
             return service.IQueryable().OrderBy(t => t.F_CreatorTime).ToList();
         }
-        public OrganizeEntity GetForm(string keyValue)
+        public Sys_Organize GetForm(string keyValue)
         {
             return service.FindEntity(keyValue);
         }
@@ -36,17 +37,29 @@ namespace NFine.Application.SystemManage
                 service.Delete(t => t.F_Id == keyValue);
             }
         }
-        public void SubmitForm(OrganizeEntity organizeEntity, string keyValue)
+        public void SubmitForm(Sys_Organize entity, string keyValue)
         {
             if (!string.IsNullOrEmpty(keyValue))
             {
-                organizeEntity.Modify(keyValue);
-                service.Update(organizeEntity);
+                entity.F_Id = keyValue;
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_LastModifyUserId = LoginInfo.UserId;
+                }
+                entity.F_LastModifyTime = DateTime.Now;
+                service.Update(entity);
             }
             else
             {
-                organizeEntity.Create();
-                service.Insert(organizeEntity);
+                entity.F_Id = Common.GuId();
+                var LoginInfo = OperatorProvider.Provider.GetCurrent();
+                if (LoginInfo != null)
+                {
+                    entity.F_CreatorUserId = LoginInfo.UserId;
+                }
+                entity.F_CreatorTime = DateTime.Now;
+                service.Insert(entity);
             }
         }
     }

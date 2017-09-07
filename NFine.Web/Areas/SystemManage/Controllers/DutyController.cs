@@ -6,7 +6,7 @@
 *********************************************************************************/
 using NFine.Application.SystemManage;
 using NFine.Code;
-using NFine.Domain.Entity.SystemManage;
+using NFine.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -34,7 +34,7 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [HttpPost]
         [HandlerAjaxOnly]
         [ValidateAntiForgeryToken]
-        public ActionResult SubmitForm(RoleEntity roleEntity, string keyValue)
+        public ActionResult SubmitForm(Sys_Role roleEntity, string keyValue)
         {
             dutyApp.SubmitForm(roleEntity, keyValue);
             return Success("操作成功。");
@@ -45,6 +45,8 @@ namespace NFine.Web.Areas.SystemManage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteForm(string keyValue)
         {
+            if (string.IsNullOrEmpty(keyValue))
+                return Error("未选中任何项。");
             dutyApp.DeleteForm(keyValue);
             return Success("删除成功。");
         }

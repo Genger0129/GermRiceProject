@@ -5,13 +5,12 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemSecurity;
 using NFine.Domain.IRepository.SystemSecurity;
 using NFine.Repository.SystemSecurity;
 
 namespace NFine.Repository.SystemSecurity
 {
-    public class LogRepository : RepositoryBase<LogEntity>, ILogRepository
+    public class LogRepository : RepositoryBase<Sys_Log>, ILogRepository
     {
        
     }

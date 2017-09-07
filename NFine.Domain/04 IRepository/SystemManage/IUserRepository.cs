@@ -5,13 +5,12 @@
  * Website：http://www.nfine.cn
 *********************************************************************************/
 using NFine.Data;
-using NFine.Domain.Entity.SystemManage;
 
 namespace NFine.Domain.IRepository.SystemManage
 {
-    public interface IUserRepository : IRepositoryBase<UserEntity>
+    public interface IUserRepository : IRepositoryBase<Sys_User>
     {
         void DeleteForm(string keyValue);
-        void SubmitForm(UserEntity userEntity, UserLogOnEntity userLogOnEntity, string keyValue);
+        void SubmitForm(Sys_User userEntity, Sys_UserLogOn userLogOnEntity, string keyValue);
     }
 }
