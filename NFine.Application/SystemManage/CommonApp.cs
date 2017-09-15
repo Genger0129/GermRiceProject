@@ -25,6 +25,10 @@ namespace NFine.Application.SystemManage
         {
             return service.Update(entity);
         }
+        public int UpdateEx(TEntity entity)
+        {
+            return service.UpdateEx(entity);
+        }
         public int Delete(TEntity entity)
         {
             return service.Delete(entity);

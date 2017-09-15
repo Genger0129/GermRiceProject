@@ -86,12 +86,17 @@ namespace NFine.Data
             PropertyInfo[] props = entity.GetType().GetProperties();
             foreach (PropertyInfo prop in props)
             {
+                string name = prop.Name;
+
                 if (prop.GetValue(entity, null) != null)
                 {
+                    if (!prop.GetValue(entity, null).ToString().Contains("System.Collections.Generic"))
+                    {
                     if (prop.GetValue(entity, null).ToString() == "&nbsp;")
                         dbcontext.Entry(entity).Property(prop.Name).CurrentValue = null;
                     dbcontext.Entry(entity).Property(prop.Name).IsModified = true;
                 }
+            }
             }
             return dbTransaction == null ? this.Commit() : 0;
         }

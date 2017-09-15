@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace NFine.Web.Controllers
 {
-    public class InterfaceEventRecvController : ApiController
+    public class InterfaceEventRecvController : BaseApiController
     {
         public void Valid()
         {

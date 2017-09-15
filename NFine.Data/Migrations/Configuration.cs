@@ -6,11 +6,11 @@ namespace NFine.Data.Migrations
     using System.Linq;
     using System.Text.RegularExpressions;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<NFine.Data.NFineDbContext>
+    public sealed class Configuration : DbMigrationsConfiguration<NFine.Data.NFineDbContext>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(NFine.Data.NFineDbContext context)

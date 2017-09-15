@@ -107,3 +107,4 @@ E:\BaiduNetdiskDownload\NFine\NFine.Data\obj\Debug\NFine.Data.pdb
 E:\BaiduNetdiskDownload\NFine\NFine.Data\obj\Debug\NFine.Data.Migrations.InitialCreate.resources
 E:\BaiduNetdiskDownload\NFine\NFine.Data\obj\Debug\NFine.Data.csproj.GenerateResource.Cache
 E:\BaiduNetdiskDownload\NFine\NFine.Data\obj\Debug\NFine.Data.Resource1.resources
+E:\BaiduNetdiskDownload\NFine\NFine.Data\bin\Debug\NFine.Data.dll.config

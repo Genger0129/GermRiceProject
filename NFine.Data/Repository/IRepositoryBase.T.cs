@@ -22,6 +22,8 @@ namespace NFine.Data
         int Insert(TEntity entity);
         int Insert(List<TEntity> entitys);
         int Update(TEntity entity);
+        int UpdateEx(TEntity entity);
+        
         int Delete(TEntity entity);
         int Delete(Expression<Func<TEntity, bool>> predicate);
         TEntity FindEntity(object keyValue);

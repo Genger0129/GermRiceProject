@@ -60,10 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="MapGenerator.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>MapGenerator.txt</LastGenOutput>
-    </None>
     <EntityDeploy Include="Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -87,10 +83,8 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MapGenerator.txt">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>MapGenerator.tt</DependentUpon>
+    <Content Include="C__MigrationHistory.txt">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Content>
     <Content Include="Model1.Context.txt">
       <AutoGen>True</AutoGen>

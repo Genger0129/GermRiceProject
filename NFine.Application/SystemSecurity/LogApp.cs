@@ -75,8 +75,6 @@ namespace NFine.Application.SystemSecurity
             Sys_Log Sys_Log = new Sys_Log();
             Sys_Log.F_Id = Common.GuId();
             Sys_Log.F_Date = DateTime.Now;
-            Sys_Log.F_Account = OperatorProvider.Provider.GetCurrent().UserCode;
-            Sys_Log.F_NickName = OperatorProvider.Provider.GetCurrent().UserName;
             Sys_Log.F_IPAddress = Net.Ip;
             Sys_Log.F_IPAddressName = Net.GetLocation(Sys_Log.F_IPAddress);
             Sys_Log.F_Result = result;
@@ -89,6 +87,17 @@ namespace NFine.Application.SystemSecurity
             Sys_Log.F_Date = DateTime.Now;
             Sys_Log.F_IPAddress = "117.81.192.182";
             Sys_Log.F_IPAddressName = Net.GetLocation(Sys_Log.F_IPAddress);
+            service.Insert(Sys_Log);
+        }
+        public async void WriteDbAsyncLog(bool result, string resultLog)
+        {
+            Sys_Log Sys_Log = new Sys_Log();
+            Sys_Log.F_Id = Common.GuId();
+            Sys_Log.F_Date = DateTime.Now;
+            Sys_Log.F_IPAddress = Net.Ip;
+            Sys_Log.F_IPAddressName = Net.GetLocation(Sys_Log.F_IPAddress);
+            Sys_Log.F_Result = result;
+            Sys_Log.F_Description = resultLog;
             service.Insert(Sys_Log);
         }
     }

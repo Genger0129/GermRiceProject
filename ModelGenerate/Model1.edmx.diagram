@@ -21,6 +21,7 @@
         <EntityTypeShape EntityType="NFineBaseModel.Sys_RoleAuthorize" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NFineBaseModel.Sys_User" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
         <EntityTypeShape EntityType="NFineBaseModel.Sys_UserLogOn" Width="1.5" PointX="2.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NFineBaseModel.C__MigrationHistory" Width="1.5" PointX="5.375" PointY="12.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

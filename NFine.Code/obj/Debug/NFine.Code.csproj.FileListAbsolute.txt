@@ -64,3 +64,4 @@ E:\BaiduNetdiskDownload\NFine\NFine.Code\bin\Debug\ServiceStack.Redis.xml
 E:\BaiduNetdiskDownload\NFine\NFine.Code\bin\Debug\ServiceStack.Text.xml
 E:\BaiduNetdiskDownload\NFine\NFine.Code\obj\Debug\NFine.Code.dll
 E:\BaiduNetdiskDownload\NFine\NFine.Code\obj\Debug\NFine.Code.pdb
+E:\BaiduNetdiskDownload\NFine\NFine.Code\obj\Debug\NFine.Code.csprojResolveAssemblyReference.cache

@@ -49,8 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DBContext\MapGenerator.cs" />
-    <Compile Include="DBContext\NFineDbContext.cs" />
+    <Compile Include="DBContext\MapGenerator.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MapGenerator.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DBContext\NFineDbContext.cs">
+      <DependentUpon>MapGenerator.tt</DependentUpon>
+    </Compile>
     <Compile Include="DBContext\Province.cs" />
     <Compile Include="DBContext\Sys_Area.cs" />
     <Compile Include="DBContext\Sys_DbBackup.cs" />
@@ -86,6 +92,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="DBContext\Manager.ttinclude" />
+    <None Include="DBContext\MapGenerator.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>MapGenerator.cs</LastGenOutput>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,7 @@ namespace ModelGenerate
     		modelBuilder.Configurations.Add(new Sys_RoleAuthorizeMap());
     		modelBuilder.Configurations.Add(new Sys_UserMap());
     		modelBuilder.Configurations.Add(new Sys_UserLogOnMap());
+    		modelBuilder.Configurations.Add(new C__MigrationHistoryMap());
     	}
     
         public virtual DbSet<Province> Province { get; set; }
@@ -56,5 +57,6 @@ namespace ModelGenerate
         public virtual DbSet<Sys_RoleAuthorize> Sys_RoleAuthorize { get; set; }
         public virtual DbSet<Sys_User> Sys_User { get; set; }
         public virtual DbSet<Sys_UserLogOn> Sys_UserLogOn { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
     }
 }

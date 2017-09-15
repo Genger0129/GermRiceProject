@@ -7,4 +7,3 @@ E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.dll
 E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.SqlServer.dll
 E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.xml
 E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.SqlServer.xml
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\obj\Debug\ModelGenerate.csprojResolveAssemblyReference.cache
