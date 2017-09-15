@@ -1,9 +1,0 @@
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\ModelGenerate.dll.config
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\ModelGenerate.dll
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\ModelGenerate.pdb
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\obj\Debug\ModelGenerate.dll
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\obj\Debug\ModelGenerate.pdb
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.dll
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.SqlServer.dll
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.xml
-E:\BaiduNetdiskDownload\NFine\ModelGenerate\bin\Debug\EntityFramework.SqlServer.xml
