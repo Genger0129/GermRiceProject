@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using NFine.Data.Migrations;
 using Newtonsoft.Json;
+using System.Web.Http;
+using NFine.Web.App_Start;
 
 namespace NFine.Web
 {
@@ -24,6 +26,8 @@ namespace NFine.Web
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+            GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();//设置返回值统一为json  
         }
     }
 }
