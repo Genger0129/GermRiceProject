@@ -100,5 +100,21 @@ namespace NFine.Application.SystemSecurity
             Sys_Log.F_Description = resultLog;
             service.Insert(Sys_Log);
         }
+        public async void WriteDbAsyncLog(bool result, string ModuleName, string resultLog)
+        {
+            Sys_Log Sys_Log = new Sys_Log();
+            Sys_Log.F_Id = Common.GuId();
+            Sys_Log.F_Date = DateTime.Now;
+            Sys_Log.F_IPAddress = Net.Ip;
+            Sys_Log.F_IPAddressName = Net.GetLocation(Sys_Log.F_IPAddress);
+            Sys_Log.F_Result = result;
+            Sys_Log.F_ModuleName = ModuleName;
+            if (resultLog.Length > 490)
+                Sys_Log.F_Description = resultLog.Substring(0, 490);
+            else
+                Sys_Log.F_Description = resultLog;
+
+            service.Insert(Sys_Log);
+        }
     }
 }

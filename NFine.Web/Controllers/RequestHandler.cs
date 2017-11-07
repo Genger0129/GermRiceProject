@@ -33,15 +33,11 @@ namespace NFine.Web.Controllers
             //获取Post正文数据，比如json文本  
             string fRequesContent = request.Content.ReadAsStringAsync().Result;
 
-            var reuqestUri = request.RequestUri == null ? "" : request.RequestUri.AbsoluteUri;
-            var requestObject = new
-            {
-                func = "RequestHandler",
-                query,
-                fRequesContent,
-                reuqestUri
-            };
-            new LogApp().WriteDbAsyncLog(true, JsonConvert.SerializeObject(requestObject));
+            var reuqestUri = request.RequestUri == null ? "" : request.RequestUri.AbsolutePath;
+            if (request.Method == HttpMethod.Get)
+                new LogApp().WriteDbAsyncLog(true, reuqestUri, query.ToString());
+            else if (request.Method == HttpMethod.Post)
+                new LogApp().WriteDbAsyncLog(true, reuqestUri, fRequesContent);
             //可以做一些其他安全验证工作，比如Token验证，签名验证。  
             //可以在需要时自定义HTTP响应消息  
             //return SendError("自定义的HTTP响应消息", HttpStatusCode.OK);  
@@ -51,24 +47,14 @@ namespace NFine.Web.Controllers
             sw.Start();
             //调用内部处理接口，并获取HTTP响应消息  
             HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
-            var responseObject = new
-            {
-                func = "responseObject",
-                response
-            };
-            new LogApp().WriteDbAsyncLog(true, JsonConvert.SerializeObject(responseObject));
             //篡改HTTP响应消息正文  
             //response.Content = new StringContent(response.Content.ReadAsStringAsync().Result.Replace(@"\\", @"\"));
             sw.Stop();
+            var content = response.Content == null ? "" : response.Content.ReadAsStringAsync().Result;
+            new LogApp().WriteDbAsyncLog(true, reuqestUri + "Res", content);
             //记录处理耗时  
             long exeMs = sw.ElapsedMilliseconds;
-            var exeMsObject = new
-            {
-                func = "exeMsObject",
-                reuqestUri,
-                exeMs
-            };
-            new LogApp().WriteDbAsyncLog(true, JsonConvert.SerializeObject(exeMsObject));
+            new LogApp().WriteDbAsyncLog(true, reuqestUri + "ExeMs", exeMs.ToString());
             return response;
         }
 
